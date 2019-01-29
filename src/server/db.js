@@ -10,6 +10,11 @@ const models={
     userId:{type:'String',require:'true'},
     userName:{type:'String',require:'true'},
     pwd:{type:'String',require:'true'}
+  },
+  admin:{
+    userId:{type:'String',require:'true'},
+    userName:{type:'String',require:'true'},
+    pwd:{type:'String',require:'true'}
   }
 }
 

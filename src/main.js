@@ -6,8 +6,10 @@ import router from './router'
 import ElementUI from "element-ui"
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/icon/iconfont.css'
+import vueCookie from 'vue-cookies'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(vueCookie)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

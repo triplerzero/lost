@@ -4,8 +4,9 @@ const express = require('express');
 const Router = express.Router();
 //导入数据库
 const db = require('./db');
-//获取user表
+//获取表
 const User = db.getModel('user');
+const Admin=db.getModel('admin');
 //引入加密中间件
 const utils = require('utility');
 
@@ -13,10 +14,10 @@ const utils = require('utility');
 // Router.get('/list',(req,res)=>{
 
 // });
-// //往user表插入数据
+//插入数据
 // let pwds=md5Pwd('2015354146');
-// let {userId,userName,pwd}={userId:'2015354146',userName:'zero',pwd:pwds};
-// User.create({userId,userName,pwd});
+// let {userId,userName,pwd}={userId:'2015354146',userName:'admin',pwd:pwds};
+// Admin.create({userId,userName,pwd});
 
 //清空user表中的数据
 Router.get('/remove', (req, res) => {
@@ -26,7 +27,7 @@ Router.get('/remove', (req, res) => {
   });
 });
 
-//登录
+//用户登录
 Router.post('/login', (req, res) => {
   let {
     userId,
@@ -46,6 +47,27 @@ Router.post('/login', (req, res) => {
     res.cookie('username',doc.userName);
     return res.json({code:0,data:doc})
   })
+})
+//管理员登录
+Router.post('/adminLogin',(req,res)=>{
+  let {
+    userId,
+    pwd
+  } = req.body;
+  pwd=md5Pwd(pwd);
+  Admin.findOne({
+    userId,
+    pwd
+  }, (err, doc) => {
+    if (!doc) {
+      return res.json({
+        code: 1,
+        msg: '账号或密码有误'
+      })
+    }
+    res.cookie('username',doc.userName);
+    return res.json({code:0,data:doc})
+  })  
 })
 
 //加密
